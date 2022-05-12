@@ -3,6 +3,13 @@ A simple ESP32 temperature monitor using a DS18B20 temperature sensor. Included 
 
 Tutorial for setup coming in the future!
 
-Custom PCB
-![5-12-2022 7-41-43 AM](https://user-images.githubusercontent.com/20516767/168151220-f9f86cd0-cec6-493f-ae5a-0815c04ff45e.jpg)
 
+![image](https://user-images.githubusercontent.com/20516767/168152265-eb2c201a-e1a0-48e3-9cf3-4120ba3ff1e1.png)
+
+![image](https://user-images.githubusercontent.com/20516767/168152230-70defaf8-ebec-43ae-aaeb-4ce8e4dd5afb.png)
+
+![image](https://user-images.githubusercontent.com/20516767/168152436-c6720363-6e44-48a0-9b4c-64e15a91ca1b.png)
+
+![image](https://user-images.githubusercontent.com/20516767/168152592-46085d35-0f87-47fb-8b53-03f278230aa3.png)
+
+![image](https://user-images.githubusercontent.com/20516767/168152783-cc057f68-2d7a-44d3-9a58-a57b98a832a3.png)
