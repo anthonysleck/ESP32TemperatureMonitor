@@ -2,8 +2,8 @@
 #define config_h
 
 // system versioning
-#define VER "0.1"
-#define VER_BUILD "05032022"
+#define VER "0.2"
+#define VER_BUILD "05122022"
 #define email "anthony.sleck@gmail.com"
 #define firmwareLink "https://github.com/anthonysleck/ESP32TemperatureMonitor"
 
@@ -29,7 +29,7 @@ const char* serverName = "http://********/post-data.php";
 String apiKeyValue = "tPmAT5Ab3j7F9";
 
 // temperature
-#define ONE_WIRE_BUS 4
+#define ONE_WIRE_BUS 2
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 String ds_tempf;
