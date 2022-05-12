@@ -12,7 +12,8 @@
    web - anthony.sleck.us
    github - https://github.com/anthonysleck
    Changelog:
-   0.01 - new code
+   0.1 - new code
+   0.2 - add'd check before post of data to confirm greater than zero; add'd apache files.
 */
 
 // includes
@@ -99,14 +100,16 @@ void temperatureSensors()
 {
   sensors.requestTemperatures();
   float ds_temperature = sensors.getTempFByIndex(0);
-
-  ds_tempf = String(ds_temperature);
-
-  // print current temperature data
-  Serial.println("");
-  Serial.print("Current Temperature is: ");
-  Serial.print(ds_tempf);
-  Serial.println("°F");
+  if (ds_temperature > 0)
+  {
+    ds_tempf = String(ds_temperature);
+    
+    // print current temperature data
+    Serial.println("");
+    Serial.print("Current Temperature is: ");
+    Serial.print(ds_tempf);
+    Serial.println("°F");
+  }
 
   // reset watchdog timer
   watchDogRefresh();
