@@ -29,7 +29,7 @@ const char* serverName = "http://********/post-data.php";
 String apiKeyValue = "tPmAT5Ab3j7F9";
 
 // temperature
-#define ONE_WIRE_BUS 2
+#define ONE_WIRE_BUS 2  // set to sensor port
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 String ds_tempf;
