@@ -2,8 +2,8 @@
 #define config_h
 
 // system versioning
-#define VER "0.2"
-#define VER_BUILD "05122022"
+#define VER "0.3"
+#define VER_BUILD "05192022"
 #define email "anthony.sleck@gmail.com"
 #define firmwareLink "https://github.com/anthonysleck/ESP32TemperatureMonitor"
 
