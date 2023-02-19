@@ -2,8 +2,8 @@
 #define config_h
 
 // system versioning
-#define VER "0.3"
-#define VER_BUILD "05192022"
+#define VER "0.4"
+#define VER_BUILD "12212022"
 #define email "anthony.sleck@gmail.com"
 #define firmwareLink "https://github.com/anthonysleck/ESP32TemperatureMonitor"
 
@@ -11,38 +11,32 @@
 #include <Arduino.h>
 #include <AsyncElegantOTA.h>
 #include <AsyncTCP.h>
-#include <DallasTemperature.h>
+#include <DHT.h>
+#include <DHT_U.h>
 #include <ESPAsyncWebServer.h>
 #include <HTTPClient.h>
-#include <OneWire.h>
-#include <SPI.h>
 #include "webpages.h"
 #include <WiFi.h>
 #include <WiFiClient.h>
+
+// server configs
+AsyncWebServer server(80);
 
 // post data timer
 unsigned long startPostMillis;
 const unsigned long periodPost = 300000;     // the time in ms the system will post data to the SQL server
 
-//post data to WWW
-const char* serverName = "http://********/post-data.php";
-String apiKeyValue = "tPmAT5Ab3j7F9";
-
-// temperature
-#define ONE_WIRE_BUS 2  // set to sensor port
-OneWire oneWire(ONE_WIRE_BUS);
-DallasTemperature sensors(&oneWire);
-String ds_tempf;
-
-// server configs
-AsyncWebServer server(80);
+// DHT setup
+#define DHTPIN 14
+#define DHTTYPE DHT11
 
 // watchdog timer
 #define WATCHDOG_TIMEOUT_S 15   // enter time in sec
 hw_timer_t * watchDogTimer = NULL;
 
-// WiFi credentials
-const char *ssid = "********";     // enter your SSID here
-const char *password = "********"; // enter password here
+// WiFi settings
+//const char WFIType "AP";                 //STA for station or AP for access point
+const char *ssid = "SLEMPSONRACING";     // enter your SSID here
+const char *password = "NotForYou"; // enter password here
 
 #endif

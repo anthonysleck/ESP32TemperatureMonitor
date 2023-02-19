@@ -107,12 +107,6 @@ const char temp_html[] PROGMEM = R"rawliteral(
     <span class="dht-labels" id="esptemperature">%ESPTEMPERATURE%</span>
     <span class="dht-labels">&deg;F</span>
   </p>
-  <footer>
-  <p>
-    <span class="footer">Rev </span> 
-    <span class="footer" id="revision">%REVISION%</span>
-  <p>
-  </footer>
 </body>
 <script>
 
@@ -124,17 +118,6 @@ setInterval(function ( ) {
     }
   };
   xhttp.open("GET", "/esptemperature", true);
-  xhttp.send();
-}, 10000 ) ;
-
-setInterval(function ( ) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("revision").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "/revision", true);
   xhttp.send();
 }, 10000 ) ;
 </script>
