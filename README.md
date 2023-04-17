@@ -1,2 +1,2 @@
-# ESP32Pool
-ESP32 Controlled Pool Temperature Monitor with Relay, OLED, and DS18B20 temperature sensor.
+# ESP32 Temperature Monitor
+ESP32 Controlled PTemperature Monitor with DS18B20 temperature sensor.
