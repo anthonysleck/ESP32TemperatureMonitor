@@ -1,10 +1,6 @@
 // includes
 #include "config.h"
 
-// variables
-String UploadData, timenow;
-float sensor_temperature, sensor_humidity, sensor_pressure, ds_temperature;
-
 String readDSTemperature()
 {
   sensors.requestTemperatures();
