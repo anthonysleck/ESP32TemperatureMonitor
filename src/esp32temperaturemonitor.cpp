@@ -1,21 +1,3 @@
-/*
-   ESP32 Temperature Monitor
-   Description:
-     A simple ESP32 Temperature Monitor with Asysnc Web to display
-     information. The data is also written to a SQL Server and
-     an APACHE PHP webpage. There is also a simple PCB layout
-     included to use a NARROW ESP32 dev board. More to come!
-   Notes:
-   -Coming Soon!
-   Contact Info:
-   email - anthony.sleck@gmail.com
-   web - anthony.sleck.us
-   github - https://github.com/anthonysleck
-   Changelog:
-   0.1 - new code
-   0.2 - add'd check before post of data to confirm greater than zero; add'd apache files.
-*/
-
 // includes
 #include "config.h"
 
@@ -29,12 +11,12 @@ String readDSTemperature()
   float espTemperature = sensors.getTempFByIndex(0);
   if (isnan(espTemperature))
   {
-    Serial.println("Failed to read from DHT sensor!");
+    debugln("Failed to read from DHT sensor!");
     return "--";
   }
   else
   {
-    //Serial.println(espTemperature);
+    //debugln(espTemperature);
     return String(espTemperature);
   }
 }
@@ -54,7 +36,7 @@ String processor(const String &var)
 
 void IRAM_ATTR watchDogInterrupt()
 {
-  Serial.println("reboot");
+  debugln("reboot");
   ESP.restart();
 }
 
@@ -65,35 +47,12 @@ void watchDogRefresh()
 
 void startWatchdogTimer()
 {
-  Serial.println("Starting watchdog timer!");
+  debugln("Starting watchdog timer!");
   watchDogTimer = timerBegin(2, 80, true);
   timerAttachInterrupt(watchDogTimer, &watchDogInterrupt, true);
   timerAlarmWrite(watchDogTimer, WATCHDOG_TIMEOUT_S * 1000000, false);
   timerAlarmEnable(watchDogTimer);
-  Serial.println("Watchdog timer started!");
-}
-
-void WiFiConnect()
-{
-  // start WiFi
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, password);
-  Serial.println("");
-
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(1000);
-    Serial.print(".");
-  }
-
-  Serial.println("");
-  Serial.print("Connected to ");
-  Serial.println(ssid);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+  debugln("Watchdog timer started!");
 }
 
 void temperatureSensors()
@@ -105,10 +64,10 @@ void temperatureSensors()
     ds_tempf = String(ds_temperature);
     
     // print current temperature data
-    Serial.println("");
-    Serial.print("Current Temperature is: ");
-    Serial.print(ds_tempf);
-    Serial.println("°F");
+    debugln("");
+    debug("Current Temperature is: ");
+    debug(ds_tempf);
+    debugln("°F");
   }
 
   // reset watchdog timer
@@ -126,18 +85,10 @@ void rootServer()
   server.on("/esptemperature", HTTP_GET, [](AsyncWebServerRequest *request)
             { request->send_P(200, "text/plain", readDSTemperature().c_str()); });
 
-  server.on("/revision", HTTP_GET, [](AsyncWebServerRequest *request)
-            { request->send_P(200, "text/plain", VER); });
-
   // start ElegantOTA
   AsyncElegantOTA.begin(&server);
   server.begin();
-  Serial.println("HTTP server started");
-  /*
-  ElegantOTA.begin(&serverOTA);
-  server.begin();
-  Serial.println("HTTP server started");
-  */
+  debugln("HTTP server started");
 }
 
 void postData()
@@ -155,26 +106,26 @@ void postData()
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
     String httpRequestData = "api_key=" + apiKeyValue + "&value1=" + String(ds_tempf) + "";
-    Serial.print("httpRequestData: ");
-    Serial.println(httpRequestData);
+    debug("httpRequestData: ");
+    debugln(httpRequestData);
 
     int httpResponseCode = http.POST(httpRequestData);
 
     if (httpResponseCode > 0)
     {
-      Serial.print("HTTP Response code: ");
-      Serial.println(httpResponseCode);
+      debug("HTTP Response code: ");
+      debugln(httpResponseCode);
     }
     else
     {
-      Serial.print("Error code: ");
-      Serial.println(httpResponseCode);
+      debug("Error code: ");
+      debugln(httpResponseCode);
     }
     http.end();
   }
   else
   {
-    Serial.println("WiFi Disconnected");
+    debugln("WiFi Disconnected");
   }
 
   // reset watchdog timer
@@ -189,17 +140,34 @@ void setup()
   Serial.begin(115200);
 
   // print sketch information
-  Serial.println("Created by Anthony Sleck");
-  Serial.println("Email at anthony.sleck@gmail.com");
-  Serial.print("Version ");
-  Serial.println(VER);
-  Serial.print("Build Code ");
-  Serial.println(VER_BUILD);
-  Serial.print("Github: ");
-  Serial.println(firmwareLink);
+  debugln("Created by Anthony Sleck");
+  debugln("Email at anthony.sleck@gmail.com");
+  debug("Version ");
+  debugln(VER);
+  debug("Build Code ");
+  debugln(VER_BUILD);
+  debug("Github: ");
+  debugln(firmwareLink);
 
   // start WiFi
-  WiFiConnect();
+  debugln("Starting WIFI connection!");
+  debugln();
+  debug("Connecting to ");
+  debugln(ssid);
+  WiFi.begin(ssid, password);
+  debugln("");
+
+  while (WiFi.status() != WL_CONNECTED)
+  {
+      delay(1000);
+      debug(".");
+  }
+
+  debugln("");
+  debug("Connected to ");
+  debugln(ssid);
+  debug("IP address: ");
+  debugln(WiFi.localIP());
 
   // start server
   rootServer();
