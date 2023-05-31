@@ -1,4 +1,3 @@
-=======
 # ESP32 Temperature Monitor
 # A simple temperature monitor using an ESP32 and a DS18B20 temperature sensor. It has OTA Web updating and a simple Web interface to view the temperature information.
 
